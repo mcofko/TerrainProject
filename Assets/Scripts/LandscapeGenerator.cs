@@ -11,6 +11,10 @@ public class LandscapeGenerator : MonoBehaviour {
     }
 
     public GameObject grass;
+    public GameObject sand;
+    public GameObject rocks;
+    public GameObject snow;
+    public GameObject water;
     public int mapSizeX = 50;
     public int mapSizeZ = 50;
 
@@ -45,9 +49,15 @@ public class LandscapeGenerator : MonoBehaviour {
             for (int z = 0; z < mapSizeZ; z++)
             {
                 y = (int) (Mathf.PerlinNoise ( (x + seed) / detailScale, (z + seed) / detailScale ) * heightScale);
-                GameObject g = Instantiate(grass);
+
+                GameObject prefab = GetProperPrefab(y);
+                
+
+                GameObject g = Instantiate(prefab);
                 g.transform.position = new Vector3(x, y, z);
                 g.transform.parent = this.transform;
+
+                CreateWaterInSandHoles(prefab, g.transform.position);
 
                 // debugging
                 if ( x == 5)
@@ -56,6 +66,34 @@ public class LandscapeGenerator : MonoBehaviour {
                     float y2 = Mathf.PerlinNoise((x + seed) / detailScale, (z + seed) / detailScale);
                     Debug.Log("z: "+ z +", y value: " + y1 + ", y with detail: " + y2 + ". ZSeed value: " + (z + seed) / detailScale);
                 }
+            }
+        }
+    }
+
+    // Method returns a specific prefab depending on the y (height) value of the object
+    GameObject GetProperPrefab(float y)
+    {
+        if (y <= 5)
+        {
+            return sand;
+        }
+        else if (y <= (heightScale - 8)) return grass;
+        else if (y <= (heightScale - 5)) return rocks;
+        else return snow;
+    }
+
+    void CreateWaterInSandHoles(GameObject obj, Vector3 position)
+    {
+        if (obj == sand)
+        {
+            int tempY = (int)position.y + 1;
+
+            while (tempY < 5)
+            {
+                GameObject waterObj = Instantiate(water);
+                waterObj.transform.position = new Vector3(position.x, tempY, position.z);
+                waterObj.transform.parent = this.transform;
+                ++tempY;
             }
         }
     }

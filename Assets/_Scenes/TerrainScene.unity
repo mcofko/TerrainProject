@@ -141,6 +141,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grass: {fileID: 1618466969560440, guid: cceeb8bec526afa45989376630d42acb, type: 2}
+  sand: {fileID: 1618466969560440, guid: d3f805f6406bb064fb5fdfa3771e83d8, type: 2}
+  rocks: {fileID: 1618466969560440, guid: ef68d2ce2849d2b47b525bd34bf6aa2e, type: 2}
+  snow: {fileID: 1618466969560440, guid: a5a4ee884d39e26449a7f72eeae34d24, type: 2}
+  water: {fileID: 1618466969560440, guid: 78d28e6dc79828642bb5b226615b49a6, type: 2}
   mapSizeX: 50
   mapSizeZ: 50
   heightScale: 20
